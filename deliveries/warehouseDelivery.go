@@ -53,11 +53,16 @@ func (bd *WarehouseDelivery) RegistrationWarehouseForm(backToMainMenu callbackFn
 	fmt.Println("Save to collection? :Y/N")
 	fmt.Scanln(&confirmation)
 
+	utils.ConsoleClear()
 	if confirmation == "Y" {
 		newWarehouse := models.NewWarehouse(name, address, large, information, price)
-		bd.warehouseService.RegisterNewWarehouse(&newWarehouse)
+		wh, err := bd.warehouseService.RegisterNewWarehouse(&newWarehouse)
+		if err != nil {
+			fmt.Println("Error Notification", err)
+		} else {
+			fmt.Printf("Success Notification %s is successfully registered\n", wh.Name)
+		}
 	}
-	utils.ConsoleClear()
 	backToMainMenu()
 }
 
@@ -67,6 +72,5 @@ func (bd *WarehouseDelivery) ListWarehouseForm(backToMainMenu callbackFn) {
 	for _, w := range warehouses {
 		fmt.Println(*w)
 	}
-
 	backToMainMenu()
 }
