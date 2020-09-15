@@ -19,7 +19,9 @@ type WarehouseDelivery struct {
 }
 
 func NewWarehouseDelivery(c *config.AppConfig) *WarehouseDelivery {
-	repo := repositories.NewWarehouseRepository(c.DataPath)
+	//repoInfra := repositories.NewWarehouseRepoInfra(c.DataPath)
+	repoInfra := repositories.NewWarehouseRepoAwsInfra(c.BucketName, c.DataPath, c.Aws)
+	repo := repositories.NewWarehouseRepository(repoInfra)
 	warehouseService := usecases.NewWarehouseService(repo)
 	return &WarehouseDelivery{warehouseService}
 }

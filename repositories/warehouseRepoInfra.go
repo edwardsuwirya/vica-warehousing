@@ -12,7 +12,7 @@ type WarehouseRepositoryInfrastructure struct {
 	dataPath string
 }
 
-func NewWarehouseRepoInfra(dataPath string) *WarehouseRepositoryInfrastructure {
+func NewWarehouseRepoInfra(dataPath string) IWarehouseFileRepo {
 	_, err := os.Stat(dataPath)
 	var file *os.File
 	defer file.Close()
@@ -27,7 +27,7 @@ func NewWarehouseRepoInfra(dataPath string) *WarehouseRepositoryInfrastructure {
 	return &WarehouseRepositoryInfrastructure{dataPath}
 }
 
-func (bri *WarehouseRepositoryInfrastructure) saveToFile(warehouseCollection *models.Warehouse) {
+func (bri *WarehouseRepositoryInfrastructure) SaveToFile(warehouseCollection *models.Warehouse) {
 	//file, _ := json.MarshalIndent(warehouseCollection, "", " ")
 	//_ = ioutil.WriteFile(bri.dataPath, file, 0644)
 	file, err := os.OpenFile(bri.dataPath, os.O_APPEND|os.O_RDWR, 0644)
@@ -39,7 +39,7 @@ func (bri *WarehouseRepositoryInfrastructure) saveToFile(warehouseCollection *mo
 	}
 }
 
-func (bri *WarehouseRepositoryInfrastructure) readFile() []*models.Warehouse {
+func (bri *WarehouseRepositoryInfrastructure) ReadFile() []*models.Warehouse {
 	//file, _ := ioutil.ReadFile(bri.dataPath)
 	//_ = json.Unmarshal(file, warehouseCollection)
 	file, err := os.OpenFile(bri.dataPath, os.O_RDONLY, 0644)

@@ -8,23 +8,22 @@ import (
 
 type warehouseRepository struct {
 	warehouseCollection []*models.Warehouse
-	repo                *WarehouseRepositoryInfrastructure
+	repo                IWarehouseFileRepo
 }
 
-func NewWarehouseRepository(dataPath string) IWarehouseRepository {
+func NewWarehouseRepository(repoInfra IWarehouseFileRepo) IWarehouseRepository {
 	warehouseCollection := make([]*models.Warehouse, 0)
-	repo := NewWarehouseRepoInfra(dataPath)
-	return &warehouseRepository{warehouseCollection, repo}
+	return &warehouseRepository{warehouseCollection, repoInfra}
 }
 
 func (br *warehouseRepository) AddNewWarehouse(warehouse *models.Warehouse) *models.Warehouse {
 	data := []byte(warehouse.Name)
 	warehouse.Kode = fmt.Sprintf("%x", md5.Sum(data))
-	br.repo.saveToFile(warehouse)
+	br.repo.SaveToFile(warehouse)
 	return warehouse
 }
 
 func (br *warehouseRepository) FindAllWarehouse() []*models.Warehouse {
-	br.warehouseCollection = br.repo.readFile()
+	br.warehouseCollection = br.repo.ReadFile()
 	return br.warehouseCollection
 }
