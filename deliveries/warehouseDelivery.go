@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"warehousing/appConstant"
 	"warehousing/models"
 	"warehousing/repositories"
 	"warehousing/usecases"
@@ -31,26 +32,26 @@ func (bd *WarehouseDelivery) RegistrationWarehouseForm(backToMainMenu callbackFn
 	var price float64
 	var confirmation string
 	fmt.Println()
-	fmt.Printf("%s\n", "Warehouse Registration Form")
+	fmt.Printf("%s\n", appConstant.WarehouseRegistrationFormLabel)
 	fmt.Printf("%s\n", strings.Repeat("-", 30))
 	scanner := bufio.NewReader(os.Stdin)
-	fmt.Print("Name : ")
+	fmt.Print(appConstant.NameLabel)
 	sName, _ := scanner.ReadString('\n')
 	name = strings.TrimSpace(sName)
-	fmt.Print("Address : ")
+	fmt.Print(appConstant.AddressLabel)
 	sAddress, _ := scanner.ReadString('\n')
 	address = strings.TrimSpace(sAddress)
-	fmt.Print("Large (/m2): ")
+	fmt.Print(appConstant.LargeLabel)
 	sLarge, _ := scanner.ReadString('\n')
 	large, _ = strconv.ParseFloat(strings.TrimSpace(sLarge), 64)
-	fmt.Print("Information : ")
+	fmt.Print(appConstant.InformationLabel)
 	sInformation, _ := scanner.ReadString('\n')
 	information = strings.TrimSpace(sInformation)
-	fmt.Print("Price (Rp.): ")
+	fmt.Print(appConstant.PriceLabel)
 	sPrice, _ := scanner.ReadString('\n')
 	price, _ = strconv.ParseFloat(strings.TrimSpace(sPrice), 64)
 
-	fmt.Println("Save to collection? :Y/N")
+	fmt.Printf(appConstant.SaveConfirmationFormat, "warehouse")
 	fmt.Scanln(&confirmation)
 
 	utils.ConsoleClear()
@@ -58,9 +59,9 @@ func (bd *WarehouseDelivery) RegistrationWarehouseForm(backToMainMenu callbackFn
 		newWarehouse := models.NewWarehouse(name, address, large, information, price)
 		wh, err := bd.warehouseService.RegisterNewWarehouse(&newWarehouse)
 		if err != nil {
-			fmt.Println("Error Notification", err)
+			fmt.Printf(appConstant.ErrorNotificationFormat, err.Error())
 		} else {
-			fmt.Printf("Success Notification %s is successfully registered\n", wh.Name)
+			fmt.Printf(appConstant.SuccessRegistrationNotificationFormat, wh.Name)
 		}
 	}
 	backToMainMenu()

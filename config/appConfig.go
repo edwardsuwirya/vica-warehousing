@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"os"
 	"warehousing/appLogging"
 )
@@ -11,10 +12,11 @@ type AppConfig struct {
 }
 
 func NewConfig() *AppConfig {
-	c := &AppConfig{
-		logFilePath: "warehousing.log",
-	}
-	c.logger("debug")
+	c := &AppConfig{}
+	logFile := c.viperGetEnv("LOG_FILE", "/tmp/app.log")
+	logLevel := c.viperGetEnv("LOG_LEVEL", "debug")
+	c.logFilePath = logFile
+	c.logger(logLevel)
 	return c
 }
 
@@ -35,4 +37,18 @@ func (c *AppConfig) logger(level string) {
 	}
 	log.SetOutput(file)
 	appLogging.Logger = appLogging.NewAppLogger(log)
+}
+
+func (c *AppConfig) viperGetEnv(key, defaultValue string) string {
+	viper.AutomaticEnv()
+	viper.SetConfigFile(".env")
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic(err)
+	}
+
+	if envVal := viper.GetString(key); len(envVal) != 0 {
+		return envVal
+	}
+	return defaultValue
 }

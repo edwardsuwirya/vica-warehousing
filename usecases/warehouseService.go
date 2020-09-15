@@ -2,6 +2,8 @@ package usecases
 
 import (
 	"errors"
+	"fmt"
+	"warehousing/appConstant"
 	"warehousing/appLogging"
 	"warehousing/models"
 	"warehousing/repositories"
@@ -17,12 +19,12 @@ func NewWarehouseService(repo repositories.IWarehouseRepository) IWarehouseServi
 
 func (bs *warehouseService) RegisterNewWarehouse(b *models.Warehouse) (*models.Warehouse, error) {
 	if b.Name == "" {
-		err := errors.New("Warehouse name can not be empty")
-		appLogging.Logger.LogError("WarehouseDelivery", "Registration New Warehouse", err.Error())
+		err := errors.New(fmt.Sprintf(appConstant.MessageEmptyFormat, "Warehouse Name"))
+		appLogging.Logger.LogError(appConstant.WarehouseService, appConstant.WarehouseRegistration, err.Error())
 		return nil, err
 	}
 	newWarehouse := bs.r.AddNewWarehouse(b)
-	appLogging.Logger.LogDebug("WarehouseDelivery", "Registration New Warehouse", newWarehouse)
+	appLogging.Logger.LogDebug(appConstant.WarehouseService, appConstant.WarehouseRegistration, newWarehouse)
 
 	return newWarehouse, nil
 }
