@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"warehousing/appConstant"
+	"warehousing/config"
 	"warehousing/models"
 	"warehousing/repositories"
 	"warehousing/usecases"
@@ -17,8 +18,8 @@ type WarehouseDelivery struct {
 	warehouseService usecases.IWarehouseService
 }
 
-func NewWarehouseDelivery() *WarehouseDelivery {
-	repo := repositories.NewWarehouseRepository()
+func NewWarehouseDelivery(c *config.AppConfig) *WarehouseDelivery {
+	repo := repositories.NewWarehouseRepository(c.DataPath)
 	warehouseService := usecases.NewWarehouseService(repo)
 	return &WarehouseDelivery{warehouseService}
 }

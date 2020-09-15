@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"warehousing/appConstant"
+	"warehousing/config"
 	"warehousing/models"
 	"warehousing/repositories"
 	"warehousing/usecases"
@@ -17,7 +18,7 @@ type CustomerOrderDelivery struct {
 	customerOrderService usecases.ICustomerOrderService
 }
 
-func NewCustomerOrderDelivery() *CustomerOrderDelivery {
+func NewCustomerOrderDelivery(c *config.AppConfig) *CustomerOrderDelivery {
 	repo := repositories.NewCustomerOrderRepository()
 	customerOrderService := usecases.NewCustomerOrderService(repo)
 	return &CustomerOrderDelivery{customerOrderService}

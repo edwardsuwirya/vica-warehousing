@@ -16,8 +16,8 @@ type AppDelivery struct {
 
 func NewAppDelivery(c *config.AppConfig) *AppDelivery {
 	return &AppDelivery{
-		warehouseDelivery:     NewWarehouseDelivery(),
-		customerOrderDelivery: NewCustomerOrderDelivery(),
+		warehouseDelivery:     NewWarehouseDelivery(c),
+		customerOrderDelivery: NewCustomerOrderDelivery(c),
 	}
 }
 

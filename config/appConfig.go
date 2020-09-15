@@ -9,14 +9,17 @@ import (
 
 type AppConfig struct {
 	logFilePath string
+	DataPath    string
 }
 
 func NewConfig() *AppConfig {
 	c := &AppConfig{}
 	logFile := c.viperGetEnv("LOG_FILE", "/tmp/app.log")
 	logLevel := c.viperGetEnv("LOG_LEVEL", "debug")
+	dataPath := c.viperGetEnv("FILE_PATH", "/tmp/warehousing.csv")
 	c.logFilePath = logFile
 	c.logger(logLevel)
+	c.DataPath = dataPath
 	return c
 }
 

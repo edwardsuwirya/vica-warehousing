@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 type Warehouse struct {
 	Kode        string
 	Name        string
@@ -17,4 +19,8 @@ func NewWarehouse(name string, address string, large float64, information string
 		Information: information,
 		Price:       price,
 	}
+}
+
+func (w *Warehouse) ToString() string {
+	return fmt.Sprintf("%s,%s,%s,%f,%s,%f\n", w.Kode, w.Name, w.Address, w.Large, w.Information, w.Price)
 }
