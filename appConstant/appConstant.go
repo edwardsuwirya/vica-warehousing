@@ -17,21 +17,21 @@ const (
 const (
 	WarehouseRegistrationFormLabel = "Warehouse Registration Form"
 	WarehouseRegistration          = "New warehouse registration"
-	NameLabel                      = "Name : "
-	AddressLabel                   = "Address : "
-	LargeLabel                     = "Large (/m2): "
-	InformationLabel               = "Information : "
-	PriceLabel                     = "Price (Rp.): "
-	WarehouseIDLabel               = "Warehouse ID : "
+	NameLabel                      = "Name"
+	AddressLabel                   = "Address"
+	LargeLabel                     = "Large (/m2)"
+	InformationLabel               = "Information"
+	PriceLabel                     = "Price (Rp.)"
+	WarehouseIDLabel               = "Warehouse ID"
 )
 
 //Customer Order Domain
 const (
 	CustomerOrderFormLabel = "Customer Order Form"
-	CustomerNameLabel      = "Customer Name : "
-	GoodsLabel             = "Goods : "
-	DateCheckInLabel       = "Date Check In (YYYY/mm/dd) : "
-	TotalDaysLabel         = "Total days rent : "
+	CustomerNameLabel      = "Customer Name"
+	GoodsLabel             = "Goods"
+	DateCheckInLabel       = "Date Check In (YYYY/mm/dd)"
+	TotalDaysLabel         = "Total days rent"
 )
 
 //Other
